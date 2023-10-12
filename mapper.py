@@ -29,8 +29,7 @@ def main(argv):
     # Use a regular expression to isolate the first word before an underscore in the file name
     president_name = "unknown"
     # read and process line    
-    line_raw = sys.stdin.readline()
-    line = read_and_clean_text(line_raw)
+    line = sys.stdin.readline()
     try:
         while line:
             if ".txt" in line:
@@ -45,8 +44,7 @@ def main(argv):
                	for word in pattern.findall(line):
                	    valence = val_table.get(word, 0)
                	    print(str(president_name)+"\t"+str(valence))
-       	    line_raw = sys.stdin.readline()
-       	    line = read_and_clean_text(line_raw)
+       	    line = sys.stdin.readline()
     except EOFError as error:
         return None
 
