@@ -39,7 +39,7 @@ def main(argv):
                	# extracting every word
                	for word in pattern.findall(line):
                	    valence = val_table.get(word, 0)
-               	    print(f"{str(president_name)}\t{str(valence)}")
+               	    print(str(president_name)+"\t"+str(valence))
        	    line_raw = sys.stdin.readline()
        	    line = read_and_clean_text(line_raw)
     except EOFError as error:
