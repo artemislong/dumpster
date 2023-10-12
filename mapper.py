@@ -16,32 +16,33 @@ def read_and_clean_text(text):
 
 # the mapper function extracts every 
 def main(argv):
-    filename = os.environ["map_input_file"]
     pattern = re.compile("[a-zA-Z][a-zA-Z0-9]*") # define word pattern
     # read valtable
     score_dict = word_scores()
     val_table = score_dict
     # read president name
-    file_name = filename.split("/")[-1]
     # Use a regular expression to isolate the first word before an underscore in the file name
+    president_name = "unknown"
     president_name = re.search(r'^([^_]+)_', file_name)
     # read and process line    
     line_raw = sys.stdin.readline()
     line = read_and_clean_text(line_raw)
-    if president_name:
-        president_name = president_name.group(1)
-    else:
-        president_name = "Unknown"
     try:
         while line:
+            if ".txt" in line:
+                # Use a regular expression to extract the first word before an underscore
+                match = re.search(r'(\w+)_\w+_\d+\.txt', line)
+                if match:
+                    president_name = match.group(1)
+            else:    
                 line = read_and_clean_text(line)
                 # print(f"Processing president: {president_name}, Line: {line.strip()}")
                	# extracting every word
                	for word in pattern.findall(line):
                	    valence = val_table.get(word, 0)
                	    print(f"{president_name}\t{valence}")
-           	    line_raw = sys.stdin.readline()
-           	    line = read_and_clean_text(line_raw)
+       	    line_raw = sys.stdin.readline()
+       	    line = read_and_clean_text(line_raw)
     except EOFError as error:
         return None
 
