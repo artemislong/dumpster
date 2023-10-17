@@ -1,0 +1,18 @@
+# log.py
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, regexp_extract, substring
+
+spark = SparkSession.builder.appName("log.py").getOrCreate()
+df = spark.read.options(delimited=' ').csv("/user/artem/access.log").toDF("log")
+
+# Creating DataFrame of Error Code, HTTP Type, and IP addresses per row
+# Define regex patterns and use regexp_extract to create columns
+df = df.withColumn("IP", regexp_extract(df["log"], r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', 0))
+df = df.withColumn("type", regexp_extract(df["log"], r'[A-Z][A-Z]+', 0))
+df = df.withColumn("code", regexp_extract(df["log"], r'(?<=\s)\d{3}(?=\s)', 0))
+df = df.withColumn("incode", substring(col("code"), 1, 1))
+df = df.drop("log") # drop log column
+# Limit the execution to the first 20 rows
+df = df.limit(20)
+# Show the resulting DataFrame
+df.show(truncate=False)
