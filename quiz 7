@@ -1,6 +1,6 @@
 # log.py
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, regexp_extract, substring, lit
+from pyspark.sql.functions import sum, col, regexp_extract, substring, concat, lit, round
 
 spark = SparkSession.builder.appName("log.py").getOrCreate()
 df = spark.read.options(delimited=' ').csv("/user/artem/access.log").toDF("log")
@@ -21,7 +21,15 @@ columns = df.columns
 
 
 # Q4
-print("question 4: client errors")
+# print("question 4: client errors")
 
-df4 = df.filter(df["incode"]=="4").groupBy("IP").sum("count").sort(col("sum(count)").desc())
-df4.show(truncate=False)
+# df4 = df.filter(df["incode"]=="4").groupBy("IP").sum("count").sort(col("sum(count)").desc())
+# df4.show(truncate=False)
+
+# Q5
+print("question 5: percentage of request types")
+total_count = df.select(sum("count")).collect()[0][0]
+print("total count", total_count)
+df5 = df.groupBy("type").sum("count").sort(col("sum(count)").desc())
+df5 = df5.withColumn("percentage", concat(round((col("sum(count)") / total_count) * 100, 2).cast("string"),lit("%")))
+df5.show(truncate=False)
