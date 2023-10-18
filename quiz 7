@@ -15,7 +15,7 @@ df = df.withColumn("count", lit(1))
 df = df.drop("log") # drop log column
 columns = df.columns
 # Limit the execution to the first 20 rows
-df = df.limit(100)
+#df = df.limit(10000)
 # Show the resulting DataFrame
 df.show(truncate=False)
 
@@ -23,9 +23,5 @@ df.show(truncate=False)
 # Q4
 print("question 4: client errors")
 
-df4 = df.filter(df["incode"]=="4")
-# Convert DataFrame to RDD, perform reduction using the reduce method, and convert back to DataFrame
-df4 = df4.rdd.map(lambda row: ((row["IP"], row["incode"]), row["count"])).reduceByKey(lambda x, y: x + y)
-# Convert the result RDD back to a DataFrame with appropriate columns
-df4 = df4.map(lambda x: (x[0][0], x[0][1], x[1])).toDF(["IP", "incode", "count"])
+df4 = df.filter(df["incode"]=="4").groupBy("IP").sum("count").orderBy("count")
 df4.show(truncate=False)
