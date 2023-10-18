@@ -17,11 +17,11 @@ columns = df.columns
 # Limit the execution to the first 20 rows
 #df = df.limit(10000)
 # Show the resulting DataFrame
-df.show(truncate=False)
+# df.show(truncate=False)
 
 
 # Q4
 print("question 4: client errors")
 
-df4 = df.filter(df["incode"]=="4").groupBy("IP").agg(sum("count").alias("sum")).sort(col("sum"))
+df4 = df.filter(df["incode"]=="4").groupBy("IP").sum("count").sort(col("sum(count)").desc())
 df4.show(truncate=False)
