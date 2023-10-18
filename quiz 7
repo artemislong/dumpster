@@ -23,5 +23,5 @@ df.show(truncate=False)
 # Q4
 print("question 4: client errors")
 
-df4 = df.filter(df["incode"]=="4").groupBy("IP").sum("count").orderBy("count")
+df4 = df.filter(df["incode"]=="4").groupBy("IP").agg(sum("count").alias("sum")).sort(col("sum"))
 df4.show(truncate=False)
