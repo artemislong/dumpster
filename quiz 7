@@ -29,7 +29,13 @@ columns = df.columns
 # Q5
 print("question 5: percentage of request types")
 total_count = df.select(sum("count")).collect()[0][0]
-print("total count", total_count)
-df5 = df.groupBy("type").sum("count").sort(col("sum(count)").desc())
-df5 = df5.withColumn("percentage", concat(round((col("sum(count)") / total_count) * 100, 2).cast("string"),lit("%")))
-df5.show(truncate=False)
+# print("total count", total_count)
+# df5 = df.groupBy("type").sum("count").sort(col("sum(count)").desc())
+# df5 = df5.withColumn("percentage", concat(round((col("sum(count)") / total_count) * 100, 2).cast("string"),lit("%")))
+# df5.show(truncate=False)
+
+# Q6
+print("question 6: percentage of code types")
+df6 = df.groupBy("incode").sum("count").sort(col("sum(count)").desc())
+df6 = df6.withColumn("percentage", concat(round((col("sum(count)") / total_count) * 100, 2).cast("string"),lit("%")))
+df6.show(truncate=False)
