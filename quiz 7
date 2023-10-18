@@ -1,6 +1,6 @@
 # log.py
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import sum, col, regexp_extract, substring, concat, lit, round
+from pyspark.sql.functions import sum, when, col, regexp_extract, substring, concat, lit, round
 
 spark = SparkSession.builder.appName("log.py").getOrCreate()
 df = spark.read.options(delimited=' ').csv("/user/artem/access.log").toDF("log")
