@@ -4,13 +4,7 @@ from datetime import date
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
 
-if __name__ == "__main__":
-    # Function to collect DStream data into a list
-    def collect_to_list(rdd_list):
-        # Convert each RDD in the list to a list
-        collected_data = [rdd.collect() for rdd in rdd_list]
-        return collected_data
-    
+if __name__ == "__main__":  
     # Setup
     sc = SparkContext(appName="PythonStreamingDemo")
     ssc = StreamingContext(sc, 1)
