@@ -26,6 +26,7 @@ if __name__ == "__main__":
     goog40Day = googPrice.window(40, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 40).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
     msft10Day = msftPrice.window(10, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 10).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
     msft40Day = msftPrice.window(40, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 40).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
+
     
     # Q3
     def timeDiff(x,y): 
