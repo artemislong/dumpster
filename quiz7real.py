@@ -23,9 +23,9 @@ if __name__ == "__main__":
     # get last days
     # Calculate moving averages and filter out windows with insufficient data
     goog10Day = googPrice.window(10, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 10).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
-    goog40Day = googPrice.window(20, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 20).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
+    goog40Day = googPrice.window(40, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 40).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
     msft10Day = msftPrice.window(10, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 10).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
-    msft40Day = msftPrice.window(20, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 20).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
+    msft40Day = msftPrice.window(40, 1).map(lambda x: (x[0],x[1],1)).reduce(lambda x,y: (max(x[0], y[0]), x[1]+y[1], x[2]+y[2])).filter(lambda xy: xy[2] == 40).map(lambda xy: (xy[0], str(xy[1] / xy[2])))
 
     # goog10Day.map(lambda x: "Avg GOOG 10days: " + str(x)).pprint()
     # goog40Day.map(lambda x: "Avg GOOG 40days: " + str(x)).pprint()
